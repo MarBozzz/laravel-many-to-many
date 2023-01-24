@@ -24,7 +24,7 @@
         </div>
         @endif
 
-        <form action="{{route('admin.projects.update',$project)}}" method="POST" enctype="multipart/form-data">
+        <form class="text-white" action="{{route('admin.projects.update',$project)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -47,6 +47,23 @@
                                 value="{{$type->id}}">{{$type->name}}</option>
                         @endforeach
                 </select>
+            </div>
+
+            <div class="mb-3">
+                <p for="technology" class="form-label">Technology</p>
+                @foreach ($technologies as $technology)
+                    <input type="checkbox"
+                    id="technology{{ $loop->iteration }}"
+                    name="technologies[]"
+                    value="{{ $technology->id }}"
+                    @if (!$errors->all() && $project->technologies->contains($technology))
+                        checked
+                    @elseif ($errors->all() && in_array($technology->id, old('technologies',[])))
+                        checked
+                    @endif
+                    >
+                    <label class="me-2" for="technology{{ $loop->iteration }}">{{ $technology->name }}</label>
+                @endforeach
             </div>
 
             <div class="mb-3">
@@ -74,7 +91,7 @@
                 @enderror
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 text-black">
                 <label for="summary" class="form-label">Summary *</label>
                 <textarea class="form-control @error('summary') is-invalid @enderror" name="summary" id="summary" rows="3">{{old('summary',$project->summary)}}</textarea>
                 @error('summary')
