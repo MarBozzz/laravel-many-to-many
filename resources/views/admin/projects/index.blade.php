@@ -29,6 +29,7 @@
                     <th class="w-100">
                         <a href="{{ route('admin.projects.orderby',['name',$direction]) }}">Project Name</a>
                     </th>
+                    <th>Technology</th>
                     <th class="">Actions</th>
                   </tr>
                 </thead>
@@ -37,6 +38,11 @@
                         <tr>
                             <td>{{$project->id}}</td>
                             <td>{{$project->name}} <span class="badge text-bg-light">{{ $project->type?->name }}</span></td>
+                            <td>@forelse ($project->technologies as $technology)
+                                <span class="badge text-bg-warning">{{$technology->name}}</span>
+                            @empty
+                                No Results
+                            @endforelse</td>
                             <td class="d-flex justify-content-end">
                                 <a class="btn btn-primary" href="{{route('admin.projects.show', $project)}}" title="show"><i class="fa-solid fa-circle-info"></i></a>
                                 <a class="btn btn-success mx-2" href="{{route('admin.projects.edit', $project)}}" title="edit"><i class="fa-solid fa-pen-to-square"></i></a>

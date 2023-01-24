@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller; // <----- a aggiungere se il controller lo 
 use App\Http\Requests\ProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Contracts\Cache\Store;
@@ -46,7 +47,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types','technologies'));
     }
 
     /**
@@ -68,6 +70,10 @@ class ProjectController extends Controller
         //dd($form_data);
 
         $new_project = Project::create($form_data);
+
+        if(array_key_exists('technologies',$form_data)){
+            $new_project->technologies()->attach($form_data['technologies']);
+        }
 
         return redirect()->route('admin.projects.show', $new_project)->with('message',"The project $new_project->name has been correctly created");
     }

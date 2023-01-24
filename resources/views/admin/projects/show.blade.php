@@ -27,6 +27,14 @@
             <h4>Type: {{ $project->type->name }}</h4>
         @endif
 
+        @if ($project->technologies)
+            <div>
+                @foreach ($project->technologies as $technology )
+                    <span class="badge text-bg-warning">{{$technology->name}}</span>
+                @endforeach
+            </div>
+        @endif
+
         <h5 class="card-title">Client name: {{$project->client_name}}</h5>
         <p class="card-text py-3">Summary{!!$project->summary!!}</p>
         </div>

@@ -19,7 +19,7 @@
             </div>
         @endif
 
-<form action="{{route('admin.projects.store')}}" method="POST" enctype="multipart/form-data">
+<form class="text-white" action="{{route('admin.projects.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
@@ -42,6 +42,21 @@
                                 value="{{$type->id}}">{{$type->name}}</option>
                         @endforeach
                 </select>
+            </div>
+
+            <div class="mb-3">
+                <p for="technology" class="form-label">Technology</p>
+                @foreach ($technologies as $technology)
+                    <input type="checkbox"
+                    id="technology{{ $loop->iteration }}"
+                    name="technologies[]"
+                    value="{{ $technology->id }}"
+                    @if (in_array($technology->id, old('technologies',[])))
+                        checked
+                    @endif
+                    >
+                    <label class="me-2" for="technology{{ $loop->iteration }}">{{ $technology->name }}</label>
+                @endforeach
             </div>
 
             <div class="mb-3">
@@ -69,7 +84,7 @@
                 @enderror
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 text-black">
                 <label for="summary" class="form-label">Summary *</label>
                 <textarea name="summary" id="summary" rows="3">{{old('summary')}}</textarea>
                 @error('summary')
