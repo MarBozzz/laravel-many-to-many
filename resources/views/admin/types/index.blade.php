@@ -40,14 +40,14 @@
                             @method('PATCH')
                             <input class="border-0" type="text" name="name" value="{{$type->name}}">
                             <button type="submit" class="btn btn-warning">UPDATE</button>
-                            <div class="d-inline">
-                                @include('admin.partials.form-delete',[
-                                    'route' => 'types',
-                                    'message' => "Please confirm you want to delete: $type->name",
-                                    'entity' => $type
-                                ])
-                            </div>
                         </form>
+                        <div class="d-inline">
+                            @include('admin.partials.form-delete',[
+                                'route' => 'types',
+                                'message' => "Please confirm you want to delete: $type->name",
+                                'entity' => $type
+                            ])
+                        </div>
                     </td>
                     <td>{{count($type->projects)}}</td>
                 </tr>
